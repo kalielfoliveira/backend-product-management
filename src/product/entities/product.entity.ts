@@ -1,9 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity( {name: 'products'} )
+@Entity( {name: 'product'} )
 export class Product {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   name: string;
@@ -11,9 +11,13 @@ export class Product {
   @Column({ nullable: true })
   description: string;
 
-  @Column('decimal')
+  @Column('decimal', { precision: 10, scale: 2 })
   price: number;
 
-  @Column()
-  quantity: number;
+  @Column({ default: 0 })
+  favorite: boolean;
+
+  @Column({ default: false })
+  bought: boolean;
+
 }
