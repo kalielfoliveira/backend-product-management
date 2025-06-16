@@ -28,7 +28,6 @@ export class CreateProduct1750030228205 implements MigrationInterface {
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         return queryRunner.query(`
-            DELETE FROM product WHERE id = 'm856pnjw6sa28b8h6';
             DELETE FROM product WHERE id = '1b725775-b4e0-488f-98d9-374fab6b4847';
             DELETE FROM product WHERE id = '1b725775-b4e0-488f-98d9-374fab6b4848';
             DELETE FROM product WHERE id = '5866d82a-c610-4826-b2d7-59ec321bea28';
