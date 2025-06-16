@@ -131,7 +131,7 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
    yarn install
    ```
 
-## ▶️ Executando o Projeto
+## Executando o Projeto
 
 - Em modo desenvolvimento:
   ```bash
