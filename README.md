@@ -145,50 +145,199 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
 
 O servidor ficará disponível em `http://localhost:3000`.
 
+
 ## Testando com Postman
 
-1. Abra o Postman.
-2. Importe a Collection disponível em `postman/backend-product-management.postman_collection.json`.
+Para testar todas as rotas da API (CRUD e regras de negócio), importe a Collection abaixo no Postman:
 
 [Produtos.postman_collection.json](https://github.com/user-attachments/files/20757635/Produtos.postman_collection.json)
 
-3. Execute as requisições abaixo para validar o CRUD e as regras de negócio:
+Ou, se você tiver o arquivo JSON exportado, basta usar **File > Import** no Postman.
 
-   - **Listar todos os produtos**  
-     GET http://localhost:3000/products
+### Pasta “CRUD’s”
 
-   - **Buscar produto por ID**  
-     GET http://localhost:3000/products/:id [1]
+1. **Consulta Produto**  
+   • Método: GET  
+   • URL: `http://localhost:3000/products`
 
-   - **Criar produto**  
-     POST http://localhost:3000/products [1]  
-     Exemplo de body (JSON):
-     ```json
-     {
-       "name": "Livro de NestJS",
-       "description": "Livro sobre backend com NestJS",
-       "price": 80,
-       "favorite": false,
-       "bought": false
-     }
-     ```
+2. **Consulta Produto por ID**  
+   • Método: GET  
+   • URL: `http://localhost:3000/products/22339b4b-1848-4eec-9413-a3d4d14e09c1`
 
-   - **Atualizar produto**  
-     PATCH http://localhost:3000/products/:id [1]  
-     Exemplo de body (JSON):
-     ```json
-     {
-       "name": "Livro de ANGULAR",
-       "description": "Livro sobre aprendizado de código do Framework ANGULAR",
-       "price": 30,
-       "favorite": true,
-       "bought": false
-     }
-     ```
+3. **Criar Produto**  
+   • Método: POST  
+   • URL: `http://localhost:3000/products`  
+   • Body (raw JSON):
+   ```json
+   {
+     "name": "Livro de NestJS",
+     "description": "Livro sobre backend com NestJS",
+     "price": 80,
+     "favorite": false,
+     "bought": false
+   }
+   ```
 
-   - **Deletar produto**  
-     DELETE http://localhost:3000/products/:id
+4. **Atualizar Produto**  
+   • Método: PATCH  
+   • URL: `http://localhost:3000/products/1b725775-b4e0-488f-98d9-374fab6b4847`  
+   • Body (raw JSON):
+   ```json
+   {
+     "id": "1b725775-b4e0-488f-98d9-374fab6b4847",
+     "name": "Livro de ANGULAR",
+     "description": "Livro sobre aprendizado de código do Framework ANGULAR",
+     "price": 30,
+     "favorite": true,
+     "bought": false
+   }
+   ```
 
+5. **Remover Produto**  
+   • Método: DELETE  
+   • URL: `http://localhost:3000/products/56461440-b476-4503-ad16-358863864185`
+
+---
+
+### Pasta “Regras de Negócio”
+
+1. **Criar Produto – Nome duplicado**  
+   • Método: POST  
+   • URL: `http://localhost:3000/products`  
+   • Body:
+   ```json
+   {
+     "name": "Livro de ANGULAR",
+     "description": "Livro sobre aprendizado de código do Framework ANGULAR",
+     "price": 50,
+     "favorite": false,
+     "bought": false
+   }
+   ```
+
+2. **Criar Produto – Preço inválido**  
+   • Método: POST  
+   • URL: `http://localhost:3000/products`  
+   • Body:
+   ```json
+   {
+     "name": "Mouse Gamer",
+     "description": "Mouse para jogos",
+     "price": 0,
+     "favorite": false,
+     "bought": false
+   }
+   ```
+
+3. **Criar Produto – Descrição curta**  
+   • Método: POST  
+   • URL: `http://localhost:3000/products`  
+   • Body:
+   ```json
+   {
+     "name": "Teclado",
+     "description": "Bom",
+     "price": 150,
+     "favorite": false,
+     "bought": false
+   }
+   ```
+
+4. **Criar Produto – Campo favorite não booleano**  
+   • Método: POST  
+   • URL: `http://localhost:3000/products`  
+   • Body:
+   ```json
+   {
+     "name": "Monitor",
+     "description": "Monitor Full HD",
+     "price": 800,
+     "favorite": "sim",
+     "bought": false
+   }
+   ```
+
+5. **Buscar Produto por ID – UUID inválido**  
+   • Método: GET  
+   • URL: `http://localhost:3000/products/123`
+
+6. **Criar Produto – Campo bought não booleano**  
+   • Método: POST  
+   • URL: `http://localhost:3000/products`  
+   • Body:
+   ```json
+   {
+     "name": "Cadeira Gamer",
+     "description": "Cadeira confortável para jogos",
+     "price": 1200,
+     "favorite": false,
+     "bought": "não"
+   }
+   ```
+
+7. **Buscar Produto por ID – Produto não encontrado**  
+   • Método: GET  
+   • URL: `http://localhost:3000/products/1b725775-b4e0-488f-98d9-374fab6b4847`
+
+8. **Criar Produto – Nome com caractere especial**  
+   • Método: POST  
+   • URL: `http://localhost:3000/products`  
+   • Body:
+   ```json
+   {
+     "id": "22339b4b-1848-4eec-9413-a3d4d14e09c1",
+     "name": "Notebook@Dell",
+     "description": "Notebook para trabalho",
+     "price": 3500,
+     "favorite": false,
+     "bought": false
+   }
+   ```
+
+9. **Criar Produto – UUID inválido**  
+   • Método: POST  
+   • URL: `http://localhost:3000/products`  
+   • Body:
+   ```json
+   {
+     "id": "123",
+     "name": "SSD Samsung",
+     "description": "SSD NVMe de 1TB",
+     "price": 600,
+     "favorite": false,
+     "bought": false
+   }
+   ```
+
+10. **Criar Produto – Preço acima do máximo**  
+    • Método: POST  
+    • URL: `http://localhost:3000/products`  
+    • Body:
+    ```json
+    {
+      "id": "d8e9f0a1-2b3c-4d5e-9f0a-1b2c3d4e5f6a",
+      "name": "Drone DJI",
+      "description": "Drone com câmera 4K",
+      "price": 200000,
+      "favorite": false,
+      "bought": false
+    }
+    ```
+
+11. **Criar Produto – Descrição com link**  
+    • Método: POST  
+    • URL: `http://localhost:3000/products`  
+    • Body:
+    ```json
+    {
+      "id": "d8e9f0a1-2b3c-4d5e-9f0a-1b2c5d1e2f6a",
+      "name": "Gabinete Gamer",
+      "description": "Veja mais em http://manfrotto.com",
+      "price": 400,
+      "favorite": false,
+      "bought": false
+    }
+    ```
 
 ## Estrutura de Pastas
 
