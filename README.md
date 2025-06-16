@@ -96,3 +96,109 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+
+
+
+
+Este repositório contém o backend do App "PRODEX", um Aplicativo de gerenciamento de produtos (CRUD de produtos) desenvolvido com NestJS.
+
+## Pré-requisitos
+
+Antes de começar, certifique-se de ter instalado em sua máquina:
+
+- Node.js (>= v14.x)
+- npm (>= v6.x) ou yarn (>= v1.x)
+- NestJS CLI (opcional, mas recomendado):  
+  ```bash
+  npm install -g @nestjs/cli
+  ```
+
+## Instalação
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/kalielfoliveira/backend-product-management.git
+   cd backend-product-management
+   ```
+
+2. Instale as dependências:
+   ```bash
+   # usando npm
+   npm install
+
+   # ou usando yarn
+   yarn install
+   ```
+
+## ▶️ Executando o Projeto
+
+- Em modo desenvolvimento:
+  ```bash
+  npm run start:dev
+  ```
+- Em modo produção:
+  ```bash
+  npm run build
+  npm run start:prod
+  ```
+
+O servidor ficará disponível em `http://localhost:3000`.
+
+## Testando com Postman
+
+1. Abra o Postman.
+2. Importe a Collection disponível em `postman/backend-product-management.postman_collection.json`.
+
+[Produtos.postman_collection.json](https://github.com/user-attachments/files/20757635/Produtos.postman_collection.json)
+
+3. Execute as requisições abaixo para validar o CRUD e as regras de negócio:
+
+   - **Listar todos os produtos**  
+     GET http://localhost:3000/products
+
+   - **Buscar produto por ID**  
+     GET http://localhost:3000/products/:id [1]
+
+   - **Criar produto**  
+     POST http://localhost:3000/products [1]  
+     Exemplo de body (JSON):
+     ```json
+     {
+       "name": "Livro de NestJS",
+       "description": "Livro sobre backend com NestJS",
+       "price": 80,
+       "favorite": false,
+       "bought": false
+     }
+     ```
+
+   - **Atualizar produto**  
+     PATCH http://localhost:3000/products/:id [1]  
+     Exemplo de body (JSON):
+     ```json
+     {
+       "name": "Livro de ANGULAR",
+       "description": "Livro sobre aprendizado de código do Framework ANGULAR",
+       "price": 30,
+       "favorite": true,
+       "bought": false
+     }
+     ```
+
+   - **Deletar produto**  
+     DELETE http://localhost:3000/products/:id
+
+
+## Estrutura de Pastas
+
+```
+src/
+├── app.module.ts        # Módulo raiz
+├── products/            # Módulo, controller e service de produtos
+│   ├── dto/             # Data Transfer Objects
+│   ├── entities/        # Classes de entidade
+│   ├── products.controller.ts
+│   └── products.service.ts
+└── main.ts              # Bootstrap do NestJS
+```
