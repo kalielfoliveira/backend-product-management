@@ -29,6 +29,10 @@ export class ProductService {
     return product;
   }
 
+  async findOne(id: string) {
+    return this.findById(id);
+  }
+
   async create(createProductDto: CreateProductDto) {
     await this.validateBusinessRules(createProductDto);
     const dto: any = { ...createProductDto };
