@@ -13,27 +13,7 @@ export class ProductService {
     private productRepository: Repository<Product>,
   ) { }
 
-  async findAll() {
-    return await this.productRepository.find();
-  }
-
-  async findById(id: string) {
-    const productId = Number(id);
-    if (isNaN(productId)) {
-      throw new BadRequestException('ID do produto deve ser um número válido');
-    }
-    const product = await this.productRepository.findOne({
-      where: { id: productId },
-    });
-    if (!product) throw new NotFoundException('Produto não encontrado');
-    return product;
-  }
-
-  async findOne(id: string) {
-    return this.findById(id);
-  }
-
-  async create(createProductDto: CreateProductDto) {
+    async create(createProductDto: CreateProductDto) {
     await this.validateBusinessRules(createProductDto);
     const dto: any = { ...createProductDto };
     if (dto.id !== undefined) {
@@ -56,11 +36,35 @@ export class ProductService {
   async remove(id: string) {
     const product = await this.findById(id);
     await this.productRepository.remove(product);
-    return { ...product, id };
+    return {
+      removed: product,
+      message: 'Produto excluído com sucesso',
+    };
   }
 
 
+  async findAll() {
+    return await this.productRepository.find();
+  }
 
+  async findById(id: string) {
+    const product = await this.productRepository.findOne({
+      where: { id },
+    });
+    if (!product) throw new NotFoundException('Produto não encontrado');
+    return product;
+  }
+
+  async findOne(id: string) {
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id)) {
+    throw new BadRequestException('O ID informado não é válido. Por favor, informe um UUID válido.');
+  }
+  const product = await this.productRepository.findOne({
+    where: { id }
+  });
+  if (!product) throw new NotFoundException('Produto não encontrado');
+  return
+  }
 
 
   private async validateBusinessRules(productDto: CreateProductDto, idToIgnore?: string) {
@@ -111,11 +115,29 @@ export class ProductService {
   }
 
   private async validateProductName(productDto: CreateProductDto, idToIgnore?: string) {
+    // Busca produto com mesmo nome e mesmo id
+    if (idToIgnore) {
+      const existingProduct = await this.productRepository.findOne({
+        where: { name: productDto.name, id: idToIgnore },
+      });
+
+      // Se encontrar, verifica se description e price são iguais
+      if (existingProduct) {
+        const isSameDescription = existingProduct.description === productDto.description;
+        const isSamePrice = String(existingProduct.price) === String(productDto.price);
+
+        // Só bloqueia se description e price também forem iguais
+        if (isSameDescription && isSamePrice) {
+          throw new BadRequestException('Já existe um produto com este nome, descrição e preço');
+        }
+        // Se pelo menos um dos campos for diferente, permite atualizar campo
+        return;
+      }
+    }
+
+    // Caso não seja atualização, ou seja outro produto com mesmo nome, bloqueia
     const existingProduct = await this.productRepository.findOne({
-      where: { 
-        name: productDto.name, 
-        ...(idToIgnore ? { id: Not(Number(idToIgnore)) } : {}) 
-      },
+      where: { name: productDto.name },
     });
     if (existingProduct) {
       throw new BadRequestException('Já existe um produto com este nome');
@@ -138,7 +160,10 @@ export class ProductService {
     if (productDto.price <= 0) {
       throw new BadRequestException('O preço do produto deve ser maior que zero');
     }
-    if (productDto.description && productDto.description.length < 800) {
+  }
+
+  private validateProductDescriptionLength(productDto: CreateProductDto) {
+  if (productDto.description && productDto.description.length > 800) {
       throw new BadRequestException('A descrição do produto deve ser menor que 800 caracteres');
     }
   }
@@ -163,14 +188,14 @@ export class ProductService {
 
   private validateProductFavorite(productDto: CreateProductDto) {
     if (typeof productDto.favorite !== 'boolean') {
-      throw new BadRequestException('O campo "favorite" deve ser um booleano');
+      throw new BadRequestException('O campo Favorito deve ser um booleano');
     }
   }
 
   private validateProductFavoriteDefault(productDto: CreateProductDto) {
   if (productDto.favorite === undefined) {
     productDto.favorite = false
-    throw new BadRequestException('O campo "favorite" deve ser false por padrão se não informado');
+    throw new BadRequestException('O campo Favorito deve ser false por padrão se não informado');
   }
 }
 
@@ -184,7 +209,7 @@ export class ProductService {
   if (productDto.bought === undefined) {
     productDto.bought = false
     throw new BadRequestException('O Checkbox do Produto deve ser false por padrão se não informado');
+    }
   }
-}
 
 }

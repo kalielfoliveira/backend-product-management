@@ -8,7 +8,9 @@ import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(dataSourceOptions), ProductModule],
+    ProductModule, 
+    TypeOrmModule.forRoot(dataSourceOptions),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
