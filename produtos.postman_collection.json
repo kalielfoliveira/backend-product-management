@@ -1,0 +1,441 @@
+{
+	"info": {
+		"_postman_id": "d54ecbca-07d7-4f29-b18d-bdf510773601",
+		"name": "Produtos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43062597",
+		"_collection_link": "https://martian-crater-285986.postman.co/workspace/Esucri~7cfca334-66fc-4d87-8ca6-c83fd67098a5/collection/43062597-d54ecbca-07d7-4f29-b18d-bdf510773601?action=share&source=collection_link&creator=43062597"
+	},
+	"item": [
+		{
+			"name": "CRUD's",
+			"item": [
+				{
+					"name": "Consulta Produto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulta Produto por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/products/22339b4b-1848-4eec-9413-a3d4d14e09c1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"22339b4b-1848-4eec-9413-a3d4d14e09c1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Produto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Livro de NestJS\",\r\n  \"description\": \"Livro sobre backend com NestJS\",\r\n  \"price\": 80,\r\n  \"favorite\": false,\r\n  \"bought\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Produto",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"1b725775-b4e0-488f-98d9-374fab6b4847\",\r\n    \"name\": \"Livro de ANGULAR\",\r\n    \"description\": \"Livro sobre aprendizado de código do Framework ANGULAR\",\r\n    \"price\": \"30\",\r\n    \"favorite\": true,\r\n    \"bought\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products/1b725775-b4e0-488f-98d9-374fab6b4847",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"1b725775-b4e0-488f-98d9-374fab6b4847"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remover Produto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/products/56461440-b476-4503-ad16-358863864185",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"56461440-b476-4503-ad16-358863864185"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Regras de Negócio",
+			"item": [
+				{
+					"name": "Criar Produto – Nome duplicado",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Livro de ANGULAR\",\r\n  \"description\": \"Livro sobre aprendizado de código do Framework ANGULAR\",\r\n  \"price\": 50,\r\n  \"favorite\": false,\r\n  \"bought\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Produto – Preço inválido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Mouse Gamer\",\r\n  \"description\": \"Mouse para jogos\",\r\n  \"price\": 0,\r\n  \"favorite\": false,\r\n  \"bought\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Produto – Descrição curta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Teclado\",\r\n  \"description\": \"Bom\",\r\n  \"price\": 150,\r\n  \"favorite\": false,\r\n  \"bought\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Produto – Campo favorite não booleano",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Monitor\",\r\n  \"description\": \"Monitor Full HD\",\r\n  \"price\": 800,\r\n  \"favorite\": \"sim\",\r\n  \"bought\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Produto por ID – UUID inválido",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products/123",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Produto – Campo bought não booleano",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Cadeira Gamer\",\r\n  \"description\": \"Cadeira confortável para jogos\",\r\n  \"price\": 1200,\r\n  \"favorite\": false,\r\n  \"bought\": \"não\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Produto por ID – Produto não encontrado",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/products/1b725775-b4e0-488f-98d9-374fab6b4847",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"1b725775-b4e0-488f-98d9-374fab6b4847"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Produto - Nome com caractere especial",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"22339b4b-1848-4eec-9413-a3d4d14e09c1\",\r\n  \"name\": \"Notebook@Dell\",\r\n  \"description\": \"Notebook para trabalho\",\r\n  \"price\": 3500,\r\n  \"favorite\": false,\r\n  \"bought\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Produto - UUID Inválido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"123\",\r\n  \"name\": \"SSD Samsung\",\r\n  \"description\": \"SSD NVMe de 1TB\",\r\n  \"price\": 600,\r\n  \"favorite\": false,\r\n  \"bought\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Produto – Preço acima do máximo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"d8e9f0a1-2b3c-4d5e-9f0a-1b2c3d4e5f6a\",\r\n  \"name\": \"Drone DJI\",\r\n  \"description\": \"Drone com câmera 4K\",\r\n  \"price\": 200000,\r\n  \"favorite\": false,\r\n  \"bought\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Produto – Descrição com link",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"d8e9f0a1-2b3c-4d5e-9f0a-1b2c5d1e2f6a\",\r\n  \"name\": \"Gabinete Gamer\",\r\n  \"description\": \"Veja mais em http://manfrotto.com\",\r\n  \"price\": 400,\r\n  \"favorite\": false,\r\n  \"bought\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
